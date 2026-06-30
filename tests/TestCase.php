@@ -135,6 +135,14 @@ abstract class TestCase extends Orchestra
             'create_erp_purchase_invoice_taxes_table',
             'create_erp_period_closing_vouchers_table',
             'create_erp_bank_transactions_table',
+            'create_erp_tax_withholding_categories_table',
+            'create_erp_tax_withholding_rates_table',
+            'create_erp_accounting_dimensions_table',
+            'create_erp_accounting_dimension_values_table',
+            'create_erp_payment_reconciliations_table',
+            'create_erp_payment_reconciliation_allocations_table',
+            'create_erp_dunnings_table',
+            'create_erp_dunning_overdue_invoices_table',
         ];
     }
 

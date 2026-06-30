@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        $prefix = config('erp-accounting.table_prefix') ?? '';
+
+        Schema::create($prefix.'dunnings', function (Blueprint $table) use ($prefix) {
+            $table->id();
+            $table->foreignId('company_id')->nullable()->constrained($prefix.'companies')->nullOnDelete();
+            $table->string('party_type')->default('Customer');
+            $table->unsignedBigInteger('party_id')->nullable();
+            $table->string('customer_name')->nullable();
+            $table->date('posting_date');
+            $table->integer('dunning_level')->default(1);
+            $table->decimal('rate_of_interest', 5, 2)->default(0);
+            $table->decimal('total_interest', 21, 9)->default(0);
+            $table->decimal('dunning_amount', 21, 9)->default(0);
+            $table->foreignId('income_account_id')->constrained($prefix.'accounts')->cascadeOnDelete();
+            $table->foreignId('debit_to_account_id')->constrained($prefix.'accounts')->cascadeOnDelete();
+            $table->unsignedTinyInteger('docstatus')->default(0);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        $prefix = config('erp-accounting.table_prefix') ?? '';
+
+        Schema::dropIfExists($prefix.'dunnings');
+    }
+};
